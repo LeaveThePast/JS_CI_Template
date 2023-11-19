@@ -64,6 +64,7 @@ describe('getLevel function error handling', () => {
     try {
       result = getLevel('789');
     } catch (error) {
+      console.error('An error occurred:', error.message);
     }
 
     result = result || 'Информация об уровне временно недоступна';
