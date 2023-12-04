@@ -2,7 +2,7 @@ function orderByProps(obj, order) {
   const result = [];
 
   for (const prop of order) {
-    if (obj.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
       result.push({ key: prop, value: obj[prop] });
       delete obj[prop];
     }
