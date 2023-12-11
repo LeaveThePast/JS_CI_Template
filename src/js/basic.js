@@ -1,3 +1,23 @@
+class Validator {
+  static validateUsername(username) {
+      const pattern = /^[a-zA-Z_-][a-zA-Z0-9_-]{0,28}[a-zA-Z0-9_-]$/;
+
+      if (pattern.test(username) && !/\d{4,}/.test(username)) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+}
+
+function cleanAndFormatPhone(phoneNumber) {
+  const cleanedNumber = phoneNumber.replace(/[^\d+]/g, '');
+
+  const formattedNumber = cleanedNumber.startsWith('8') ? '+7' + cleanedNumber.slice(1) : cleanedNumber;
+
+  return formattedNumber;
+}
+
 function orderByProps(obj, order) {
   const result = [];
 
@@ -25,4 +45,4 @@ function extractAttackInfo({ special }) {
   }));
 }
 
-export { orderByProps, extractAttackInfo }
+export { Validator, cleanAndFormatPhone, orderByProps, extractAttackInfo }

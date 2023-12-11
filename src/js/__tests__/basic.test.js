@@ -1,4 +1,33 @@
-import { orderByProps, extractAttackInfo } from "../basic";
+import { Validator, cleanAndFormatPhone, orderByProps, extractAttackInfo } from "../basic";
+
+describe('Validator', () => {
+  it('should validate a valid username', () => {
+    expect(Validator.validateUsername("user123_name")).toBe(true);
+  });
+
+  it('should not validate a username with too many digits', () => {
+    expect(Validator.validateUsername("user1234_name")).toBe(false);
+  });
+
+  it('should not validate a username starting with a digit', () => {
+    expect(Validator.validateUsername("1user_name")).toBe(false);
+  });
+
+  it('should not validate a username ending with a special character', () => {
+    expect(Validator.validateUsername("user_name!")).toBe(false);
+  });
+
+  it('should not validate a username with a sequence of special characters', () => {
+    expect(Validator.validateUsername("user__name")).toBe(true);
+  });
+});
+
+it('cleanAndFormatPhone function', () => {
+  expect(cleanAndFormatPhone('8 (927) 000-00-00')).toBe('+79270000000');
+  expect(cleanAndFormatPhone('+7 960 000 00 00')).toBe('+79600000000');
+  expect(cleanAndFormatPhone('+86 000 000 0000')).toBe('+860000000000');
+});
+
 
 it('orderByProps should return sorted array of object properties', () => {
   const obj = { name: 'Swordsman', health: 10, level: 2, attack: 80, defence: 40 };
@@ -56,3 +85,6 @@ it('extractAttackInfo should return array with default description if not availa
     },
   ]);
 });
+
+
+
