@@ -1,3 +1,5 @@
+
+//Userdata validator
 class Validator {
   static validateUsername(username) {
       const pattern = /^[a-zA-Z_-][a-zA-Z0-9_-]{0,28}[a-zA-Z0-9_-]$/;
@@ -18,6 +20,35 @@ function cleanAndFormatPhone(phoneNumber) {
   return formattedNumber;
 }
 
+//User settings
+class Settings {
+  constructor() {
+    this.defaultSettings = new Map([
+      ['theme', 'dark'],
+      ['music', 'trance'],
+      ['difficulty', 'easy']
+    ]);
+    this.userSettings = new Map();
+  }
+
+  setSetting(name, value) {
+    if (name == "theme" && (value == "light" || value == "gray" || value == "dark")) {
+      this.userSettings.set(name, value);
+    } else if (name == "music" && (value == "pop" || value == "rock" || value == "chillout" || value == "off" || value == "trance")) {
+      this.userSettings.set(name, value);
+    } else if (name == "difficulty" && (value == "normal" || value == "hard" || value == "nightmare" || value == "easy")) {
+      this.userSettings.set(name, value);
+    } else {
+      throw new Error (`Некорректно указан тип параметра ${name}, или его значение ${value}`)
+    }
+  }
+
+  get settings() {
+    return new Map([...this.defaultSettings, ...this.userSettings]);
+  }
+}
+
+//Basic actions, shoud be moved in app.js
 function orderByProps(obj, order) {
   const result = [];
 
@@ -45,4 +76,4 @@ function extractAttackInfo({ special }) {
   }));
 }
 
-export { Validator, cleanAndFormatPhone, orderByProps, extractAttackInfo }
+export { Validator, Settings, cleanAndFormatPhone, orderByProps, extractAttackInfo }

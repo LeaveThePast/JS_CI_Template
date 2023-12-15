@@ -1,4 +1,4 @@
-import { Validator, cleanAndFormatPhone, orderByProps, extractAttackInfo } from "../basic";
+import { Validator, Settings, cleanAndFormatPhone, orderByProps, extractAttackInfo } from "../basic";
 
 describe('Validator', () => {
   it('should validate a valid username', () => {
@@ -20,6 +20,50 @@ describe('Validator', () => {
   it('should not validate a username with a sequence of special characters', () => {
     expect(Validator.validateUsername("user__name")).toBe(true);
   });
+});
+
+describe('Settings class', () => {
+  let settings;
+
+  beforeEach(() => {
+    settings = new Settings();
+  });
+
+  it('should have correct default settings', () => {
+    const correctResult = new Map();
+    correctResult.set("theme", "dark");
+    correctResult.set("music", "trance");
+    correctResult.set("difficulty", "easy");
+    expect(settings.defaultSettings).toEqual(correctResult);
+  });
+
+  it('should set and get theme setting correctly', () => {
+    settings.setSetting('theme', 'light');
+    expect(settings.settings.get('theme')).toBe('light');
+  });
+
+  it('should set and get music setting correctly', () => {
+    settings.setSetting('music', 'rock');
+    expect(settings.settings.get('music')).toBe('rock');
+  });
+
+  test('should set and get difficulty setting correctly', () => {
+    settings.setSetting('difficulty', 'hard');
+    expect(settings.settings.get('difficulty')).toBe('hard');
+  });
+
+  test('should throw an error for invalid setting name', () => {
+    const invalidSetting = "invalidSetting"
+    const validValue = "light"
+    expect(() => settings.setSetting(invalidSetting, validValue)).toThrow(`Некорректно указан тип параметра ${invalidSetting}, или его значение ${validValue}`);
+  });
+
+  test('should throw an error for invalid setting value', () => {
+    const validSetting = "theme"
+    const invalidValue = "pink"
+    expect(() => settings.setSetting(validSetting, invalidValue)).toThrow(`Некорректно указан тип параметра ${validSetting}, или его значение ${invalidValue}`);
+  });
+
 });
 
 it('cleanAndFormatPhone function', () => {
