@@ -1,4 +1,4 @@
-import { Validator, Settings, cleanAndFormatPhone, orderByProps, extractAttackInfo } from "../basic";
+import { Validator, Settings, ArrayBufferConverter, getBuffer, cleanAndFormatPhone, orderByProps, extractAttackInfo } from "../basic";
 
 describe('Validator', () => {
   it('should validate a valid username', () => {
@@ -64,6 +64,15 @@ describe('Settings class', () => {
     expect(() => settings.setSetting(validSetting, invalidValue)).toThrow(`Некорректно указан тип параметра ${validSetting}, или его значение ${invalidValue}`);
   });
 
+});
+
+describe('ArrayBufferConverter', () => {
+  test('should correctly convert buffer to string', () => {
+    const converter = new ArrayBufferConverter();
+    const buffer = getBuffer();
+    converter.load(buffer);
+    expect(converter.toString()).toBe('{"data":{"user":{"id":1,"name":"Hitman","level":10}}}');
+  });
 });
 
 it('cleanAndFormatPhone function', () => {

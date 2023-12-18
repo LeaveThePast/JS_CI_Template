@@ -1,5 +1,5 @@
 
-//Userdata validator
+// Userdata validator
 class Validator {
   static validateUsername(username) {
       const pattern = /^[a-zA-Z_-][a-zA-Z0-9_-]{0,28}[a-zA-Z0-9_-]$/;
@@ -20,7 +20,7 @@ function cleanAndFormatPhone(phoneNumber) {
   return formattedNumber;
 }
 
-//User settings
+// User settings
 class Settings {
   constructor() {
     this.defaultSettings = new Map([
@@ -48,7 +48,28 @@ class Settings {
   }
 }
 
-//Basic actions, shoud be moved in app.js
+// ArrayBuffer converter
+class ArrayBufferConverter {
+  load(buffer) {
+    this.buffer = buffer;
+  }
+
+  toString() {
+    return String.fromCharCode.apply(null, new Uint16Array(this.buffer));
+  }
+}
+
+function getBuffer() {
+  const data = '{"data":{"user":{"id":1,"name":"Hitman","level":10}}}';
+  const buffer = new ArrayBuffer(data.length * 2);
+  const bufferView = new Uint16Array(buffer);
+  for (let i = 0; i < data.length; i++) {
+    bufferView[i] = data.charCodeAt(i);
+  }
+  return buffer;
+}
+
+// Basic actions, shoud be moved in app.js
 function orderByProps(obj, order) {
   const result = [];
 
@@ -76,4 +97,4 @@ function extractAttackInfo({ special }) {
   }));
 }
 
-export { Validator, Settings, cleanAndFormatPhone, orderByProps, extractAttackInfo }
+export { Validator, Settings, ArrayBufferConverter, getBuffer, cleanAndFormatPhone, orderByProps, extractAttackInfo }
