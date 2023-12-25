@@ -10,18 +10,18 @@ class GameSaving {
 }
 
 export default class GameSavingLoader {
-  static async load() {
+  static async load(inputData) {
     try {
-      const data = await read();
+      const data = await read(inputData);
       const value = await json(data);
       return value;
-    } 
-    catch (error) {
+    } catch (error) {
       throw new Error(`Error loading game saving: ${error.message}`);
     }
   }
 }
 
+// const data = '{"id":9,"created":1546300800,"userInfo":{"id":1,"name":"Hitman","level":10,"points":2000}}';
 // (async () => {
 //   try {
 //     const saving = await GameSavingLoader.load();
