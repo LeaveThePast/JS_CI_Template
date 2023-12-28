@@ -1,24 +1,50 @@
 //Team management
 class Team {
   constructor() {
-      this.members = new Set();
+    this.members = new Set();
   }
 
   add(character) {
-      if (this.members.has(character)) {
-          throw new Error("Такой персонаж уже есть в команде");
-      }
-      this.members.add(character);
+    if (this.members.has(character)) {
+      throw new Error("Такой персонаж уже есть в команде");
+    }
+    this.members.add(character);
   }
 
   addAll(...characters) {
-      characters.forEach((character) => {
-          this.members.add(character);
-      });
+    characters.forEach((character) => {
+      this.members.add(character);
+    });
   }
 
   toArray() {
-      return Array.from(this.members);
+    return Array.from(this.members);
+  }
+
+  // [Symbol.iterator]() {
+  //   membersArray = this.toArray()
+  //   let currentIndex = 0
+
+  //   return {
+  //     next: () => {
+  //       if (currentIndex < membersArray.lenght) {
+  //         return {
+  //           value: membersArray[currentIndex++],
+  //           done: false,
+  //         }
+  //       } else {
+  //         return {
+  //           done: true
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  *[Symbol.iterator]() {
+    for (const member of this.members) {
+      yield member;
+    }
   }
 }
 

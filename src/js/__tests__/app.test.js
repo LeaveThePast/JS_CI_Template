@@ -33,7 +33,17 @@ describe("Team", () => {
     team.addAll(character1, character2);
     const correctResult = [character1, character2];
     expect(team.toArray()).toEqual(correctResult);
-});
+  });
+
+  it('should iterate over team members using iterator', () => {
+    const myTeam = new Team();
+    myTeam.addAll("abc", "abcd", "abcde");
+    const iterator = myTeam[Symbol.iterator]();
+    expect(iterator.next()).toEqual({ value: 'abc', done: false });
+    expect(iterator.next()).toEqual({ value: 'abcd', done: false });
+    expect(iterator.next()).toEqual({ value: 'abcde', done: false });
+    expect(iterator.next()).toEqual({ done: true });
+  });
 });
 
 
